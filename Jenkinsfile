@@ -33,8 +33,8 @@ pipeline {
 
 			steps {
 				//sh 'docker-compose down && docker-compose up -d -f docker-compose.yaml'
-				//sh 'docker run --name node-app -d -p 8000:8000 akshaydevops97/node-app:latest'
-				sh 'kubectl apply -f deployment.yaml'
+				sh 'docker run --name node-app -d -p 8000:8000 akshaydevops97/node-app:latest'
+				//sh 'kubectl apply -f deployment.yaml'
 				
 			}
 		}
