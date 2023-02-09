@@ -13,7 +13,7 @@ pipeline {
         }
         stage('DockerBuild') {
             steps {
-                sh 'docker build -t akshaydevops97/todoapp:latest  .'
+                sh 'docker build -t akshaydevops97/todoapp:latest .'
             }
         }
         stage('Login') {
