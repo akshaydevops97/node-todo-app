@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('GitCheckout') {
             steps {
-                git 'https://github.com/akshaydevops97/node-todo-app.git'
+                git branch: 'main', url: 'https://github.com/akshaydevops97/node-todo-app.git'
             }
         }
         stage('DockerBuild') {
