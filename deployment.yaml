@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: todoapp
-        image: akshaydevops97/todo-app:latest
+        image: akshaydevops97/todoapp:latest
         ports:
         - containerPort: 9090
 ---
