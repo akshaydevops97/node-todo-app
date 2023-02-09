@@ -13,7 +13,7 @@ pipeline {
         }
         stage('DockerBuild') {
             steps {
-                sh 'docker build -t akshaydevops97/todoapp:latest  ./node-todo-cicd-master'
+                sh 'docker build -t akshaydevops97/todoapp:latest  .'
             }
         }
         stage('Login') {
@@ -26,7 +26,7 @@ pipeline {
 		stage('Push') {
 
 			steps {
-				sh 'docker push akshaydevops97/node-app:latest'
+				sh 'docker push akshaydevops97/todoapp:latest'
 			}
 		}
 		stage('Deploy') {
