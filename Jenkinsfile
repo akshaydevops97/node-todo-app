@@ -1,29 +1,40 @@
 pipeline {
-    agent { label 'node-agent' }
+    agent any
     
-    stages{
-        stage('Code'){
-            steps{
-                git url: 'https://github.com/LondheShubham153/node-todo-cicd.git', branch: 'master' 
+    environment {
+		DOCKERHUB_CREDENTIALS=credentials('DockerHub')
+	}
+	
+    stages {
+        stage('GitCheckout') {
+            steps {
+                git 'https://github.com/akshaydevops97/node-app.git'
             }
         }
-        stage('Build and Test'){
-            steps{
-                sh 'docker build . -t trainwithshubham/node-todo-test:latest'
+        stage('DockerBuild') {
+            steps {
+                sh 'docker build -t akshaydevops97/node-app:latest  ./node-todo-cicd-master'
             }
         }
-        stage('Push'){
-            steps{
-                withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-        	     sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-                 sh 'docker push trainwithshubham/node-todo-test:latest'
-                }
-            }
-        }
-        stage('Deploy'){
-            steps{
-                sh "docker-compose down && docker-compose up -d"
-            }
-        }
+        stage('Login') {
+
+			steps {
+				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+			}
+		}
+
+		stage('Push') {
+
+			steps {
+				sh 'docker push akshaydevops97/node-app:latest'
+			}
+		}
+		stage('Deploy') {
+
+			steps {
+				//sh 'docker-compose down && docker-compose up -d -f docker-compose.yaml'
+				sh 'docker run --name node-app -d -p 8000:8000 akshaydevops97/node-app:latest'
+			}
+		}
     }
 }
