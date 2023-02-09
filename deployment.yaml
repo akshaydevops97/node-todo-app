@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todoapp-deployment
+  labels:
+    app: todoapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todoapp
+  template:
+    metadata:
+      labels:
+        app: todoapp
+    spec:
+      containers:
+      - name: todoapp
+        image: akshaydevops97/todo-app:latest
+        ports:
+        - containerPort: 9090
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: todoapp-service
+spec:
+  type: NodePort
+  selector:
+    app: todoapp
+  ports:
+  - name: todoapp
+    protocol: TCP
+    port: 9090
+    targetPort: 9090
